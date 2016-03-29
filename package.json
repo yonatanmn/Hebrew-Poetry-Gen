@@ -9,12 +9,15 @@
     "express": "latest",
     "iconv": "^2.1.11",
     "mkdirp": "^0.5.1",
+    "mongoose": "^4.4.9",
     "request": "latest",
     "x-ray": "latest",
     "x-ray-phantom": "^1.0.1"
   },
   "scripts": {
-    "start": "nodemon lib/main.js",
+    "watch": "nodemon lib/main.js",
+    "fetch": "node lib/main.js",
+    "start": "npm run babel & npm run watch",
     "babel": "babel src -d lib -w"
   },
   "devDependencies": {
