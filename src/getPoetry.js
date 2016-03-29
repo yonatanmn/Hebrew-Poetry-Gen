@@ -1,10 +1,13 @@
 //var fs = require('fs');
 var Promise = require("bluebird");
 //var fs = Promise.promisifyAll(require("fs"));
-var Xray = require('x-ray');
-var phantom = require('x-ray-phantom');
+//var Xray = require('x-ray');
+//var phantom = require('x-ray-phantom');
 var mongoose = require('mongoose');
 import Poet from './poetModel';
+var Nightmare = require('nightmare');
+//var nightmare = Nightmare({ show: true })
+
 
 function removeLineBreaks(text){
   if(!text){return ''; }
@@ -16,10 +19,23 @@ function removeLineBreaks(text){
 
 function getSong(songLink) {
   //console.log(songLink)
-  let xr = Xray().driver(phantom({webSecurity: false}));
-  return new Promise((resolve, reject) => {
-    if(!songLink){resolve({})}
+  //let xr = Xray().driver(phantom({webSecurity: false}));
+  //return new Promise((resolve, reject) => {
+  //  if(!songLink){resolve({})}
 
+    return Nightmare()
+      .goto(songLink)
+      //.type('input[title="Search"]', 'github nightmare')
+      //.click('#uh-search-button')
+      .wait('.global_main_shadow')
+      .evaluate(function () {
+        return {
+          name: document.querySelector('span.artist_song_name_txt').innerText,
+          lyrics: document.querySelector('span.artist_lyrics_text').innerText,
+        }
+      })
+      .end()
+/*
     xr(songLink, 'td.artist_normal_txt', [{name: 'span.artist_song_name_txt', lyrics: 'span.artist_lyrics_text'}])((err, songResp)=> {
       if (!err && songResp) {
         console.log('getPoetSongs');
@@ -30,13 +46,24 @@ function getSong(songLink) {
       } else {
         console.log('error in xr2')
         reject(err);
-      }
-    });
-  });
+      }*/
+    //});
+  //});
 
 }
 function getPoetSongsLinks(poetPageUrl) {
-  let xr = Xray().driver(phantom({webSecurity: false}));
+
+  return Nightmare()
+    .goto(poetPageUrl)
+    //.type('input[title="Search"]', 'github nightmare')
+    //.click('#uh-search-button')
+    .wait('.global_main_shadow')
+    .evaluate(function () {
+      return [].slice.call(document.querySelectorAll('.artist_player_songlist')).map(n=>n.href)
+    })
+    .end()
+
+  //let xr = Xray().driver(phantom({webSecurity: false}));
     //.driver(phantom({webSecurity: false})); //add this for JS rendered pages
   return new Promise((resolve, reject) => {
     if(!poetPageUrl){resolve('')}
@@ -58,10 +85,10 @@ function getPoetSongsLinks(poetPageUrl) {
 
 async function updatePoet(poet) {
   let songsLinks = await getPoetSongsLinks(poet.pageUrl);
+  console.log('songs',songsLinks);
   let songs = await Promise.all(songsLinks.map(getSong));
-  //console.log(songsLinks);
   console.log('songs',songs);
-  return;
+  //return;
   return new Promise((resolve, reject) => {
 
       //console.log('songs', songs)
