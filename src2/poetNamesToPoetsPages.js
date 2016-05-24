@@ -1,8 +1,8 @@
 import poets from './poetsList';
-import Nightmare from 'nightmare';
+var Nightmare = require('nightmare');
 import Promise from "bluebird";
-var fs = Promise.promisifyAll(require("fs"));
-import merge from 'deepmerge';
+//var fs = Promise.promisifyAll(require("fs"));
+//import merge from 'deepmerge';
 
 //
 // function getPoetSearchPageFromShironet(name) {
@@ -34,22 +34,24 @@ function hasNoSongsLike(poet){
 export default async function run() {
   // const x = await Promise.all(poets.map(getPoetUrl));
   // let data = fs.readFile()
-  const dataFile = await fs.readFileAsync('./assets/data.json');
+/*  const dataFile = await fs.readFileAsync('./assets/data.json');
   const data = JSON.parse(dataFile);
   console.log(2);
 
+  const poetsNotSavedYet = poets.filter(hasNoSongsLike);
+  const promises = poetsNotSavedYet.map(getPoetUrl).map(p=>{return Promise.resolve(p).reflect();})
 
 
-  const poetsUrls = await Promise.all(poets.filter(hasNoSongsLike).map(getPoetUrl))/*.then(r=>{
+  const poetsUrls = await Promise.all(promises);/!*.then(r=>{
     console.log('123');
     console.log(r);
-  });*/
+  });*!/
   console.log(3);
   console.log(poetsUrls);
 
-  const newData = merge(data, poetsUrls);
+  const newData = merge(data, poetsUrls);*/
   console.log(4);
-  console.log('done', newData);
+  //console.log('done', newData);
 
 }
 
