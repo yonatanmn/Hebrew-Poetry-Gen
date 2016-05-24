@@ -6,10 +6,12 @@
     "asyncawait": "^1.0.3",
     "babel-polyfill": "^6.7.2",
     "bluebird": "^3.3.4",
+    "deepmerge": "^0.2.10",
     "express": "latest",
     "iconv": "^2.1.11",
     "mkdirp": "^0.5.1",
     "mongoose": "^4.4.9",
+    "nightmare": "^2.2.0",
     "ramda": "^0.20.1",
     "request": "latest",
     "x-ray": "latest",
@@ -19,7 +21,7 @@
     "watch": "nodemon lib/main.js",
     "fetch": "node lib/main.js",
     "start": "npm run babel & npm run watch",
-    "babel": "babel src -d lib -w"
+    "babel": "babel src2 -d lib -w"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
