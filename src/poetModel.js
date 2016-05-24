@@ -5,23 +5,14 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-let SongSchema = new Schema({
-  name: String,
-  url: String
-});
+
 
 var PoetSchema = new Schema({
   name: String,
   fetchDate: { type: Date, default: Date.now },
   pageUrl: String,
-  songs: {
-    //type: [{
-      name: String,
-      lyrics: String,
-      url: String
-    //}],
-    //default: []
-  }
+  songs:  [{type: Schema.ObjectId, ref: 'Song'}]
 });
+
 export default mongoose.model('Poet', PoetSchema);
 

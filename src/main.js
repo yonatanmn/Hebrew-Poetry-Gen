@@ -1,7 +1,8 @@
+'use strict';
+
 import "babel-polyfill";
 //require("babel-core/register");
 //require("babel-polyfill");
-'use strict';
 
 import getPoetry from './getPoetry';
 import getPoetsPage from './getPoetsPage';
@@ -24,6 +25,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 
 (async function run(){
+  console.log('start main');
   //await getPoetsPage();
   await getPoetry();
   console.log('close');

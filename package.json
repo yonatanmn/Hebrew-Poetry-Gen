@@ -10,6 +10,7 @@
     "iconv": "^2.1.11",
     "mkdirp": "^0.5.1",
     "mongoose": "^4.4.9",
+    "ramda": "^0.20.1",
     "request": "latest",
     "x-ray": "latest",
     "x-ray-phantom": "^1.0.1"
